@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 const db = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: '1234',
+    password: '1234', 
     database: 'projeto_db'
 });
 
@@ -49,6 +49,30 @@ app.post('/inserir', (req, res) => {
         }
     });
 });
+
+
+// Rota para exibir o formulário de adicionar produto
+app.get('/adicionar-produto', (req, res) => {
+    res.render('adicionar-produto');
+});
+
+
+// Rota para processar a inserção de produto
+app.post('/inserir-produto', (req, res) => {
+    const { nome, descricao, preco } = req.body;
+    const sql = 'INSERT INTO produtos (nome, descricao, preco) VALUES (?, ?, ?)';
+
+    db.query(sql, [nome, descricao, preco], (err, result) => {
+        if (err) {
+            console.error('Erro ao inserir produto:', err);
+            res.status(500).send('Erro ao inserir produto');
+        } else {
+            res.send('Produto inserido com sucesso!');
+        }
+    });
+});
+
+
 
 // Iniciar o servidor
 app.listen(3000, () => {
