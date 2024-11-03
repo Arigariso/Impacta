@@ -20,18 +20,15 @@ CREATE TABLE produtos (
 
 SELECT * FROM produtos;
 
-
-
-
-
-
-
-
-
 -- Tabela para categorias
 CREATE TABLE categorias (
   nome VARCHAR(100)
 );
+
+SELECT * FROM categorias;
+
+
+
 
 -- Tabela para pedidos
 CREATE TABLE pedidos (

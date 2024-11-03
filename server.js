@@ -73,6 +73,27 @@ app.post('/inserir-produto', (req, res) => {
 });
 
 
+// Rota para exibir o formulário de adicionar categoria
+app.get('/adicionar-categoria', (req, res) => {
+    res.render('adicionar-categoria');
+});
+
+// Rota para processar o formulário de inserção de categoria
+app.post('/inserir-categoria', (req, res) => {
+    const { nome } = req.body;
+    const sql = 'INSERT INTO categorias (nome) VALUES (?)';
+
+    db.query(sql, [nome], (err, result) => {
+        if (err) {
+            console.error('Erro ao inserir categoria:', err);
+            res.status(500).send('Erro ao inserir categoria');
+        } else {
+            res.send('Categoria inserida com sucesso!');
+        }
+    });
+});
+
+
 
 // Iniciar o servidor
 app.listen(3000, () => {
