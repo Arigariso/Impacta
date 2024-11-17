@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 const db = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: '1234', 
+    password: '1234',
     database: 'projeto_db'
 });
 
@@ -93,7 +93,25 @@ app.post('/inserir-categoria', (req, res) => {
     });
 });
 
+// Rota para exibir o formulário de deletar pedido
+app.get('/deletar-pedido', (req, res) => {
+    res.render('deletar-pedido');
+});
 
+// Rota para processar a exclusão de pedido
+app.post('/deletar-pedido', (req, res) => {
+    const { nome_cliente, produto } = req.body;
+    const sql = 'DELETE FROM pedidos WHERE nome_cliente = ? AND produto = ?';
+
+    db.query(sql, [nome_cliente, produto], (err, result) => {
+        if (err) {
+            console.error('Erro ao deletar pedido:', err);
+            res.status(500).send('Erro ao deletar pedido');
+        } else {
+            res.send('Pedido deletado com sucesso!');
+        }
+    });
+});
 
 // Iniciar o servidor
 app.listen(3000, () => {
